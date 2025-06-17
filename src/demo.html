@@ -1,0 +1,130 @@
+<button onclick="openModal('dietPlanModal')">Generate Diet Plan || </button>
+
+    <!-- Button to open the modal for calorie burn finder -->
+    <button onclick="openModal('calorieBurnModal')">Find Calorie Burn</button>
+    
+    <!-- Modal for diet plan -->
+    <div id="dietPlanModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('dietPlanModal')">&times;</span>
+        <h2>Enter Your Weight and Height</h2>
+        <form id="dietForm">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" id="weight" name="weight" required><br><br>
+          <label for="height">Height (cm):</label>
+          <input type="number" id="height" name="height" required><br><br>
+          <button type="submit">Generate Plan</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Modal for calorie burn finder -->
+    <div id="calorieBurnModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('calorieBurnModal')">&times;</span>
+        <h2>Enter Exercise Details</h2>
+        <form id="calorieForm">
+          <label for="pushUps">Number of Push-ups:</label>
+          <input type="number" id="pushUps" name="pushUps" required><br><br>
+          <label for="squats">Number of Squats:</label>
+          <input type="number" id="squats" name="squats" required><br><br>
+          <button type="submit">Calculate Calories Burned</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Script for modal functionality and form handling -->
+    <script>
+      // Function to open a modal
+      function openModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = "block";
+      }
+    
+      // Function to close a modal
+      function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = "none";
+      }
+    
+      // Function to handle diet form submission
+      document.getElementById("dietForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        // Retrieve weight and height input values
+        var weight = parseFloat(document.getElementById("weight").value);
+        var height = parseFloat(document.getElementById("height").value);
+    
+        // Validate inputs
+        if (isNaN(weight) || isNaN(height)) {
+          alert("Please enter valid weight and height.");
+          return;
+        }
+    
+        // Calculate BMI (for illustration purposes)
+        var bmi = weight / ((height / 100) * (height / 100));
+        var bmiCategory;
+    
+        // Determine BMI category
+        if (bmi < 18.5) {
+          bmiCategory = "Underweight";
+        } else if (bmi >= 18.5 && bmi < 25) {
+          bmiCategory = "Normal weight";
+        } else if (bmi >= 25 && bmi < 30) {
+          bmiCategory = "Overweight";
+        } else {
+          bmiCategory = "Obese";
+        }
+    
+        // Generate diet plan (dummy data)
+        var dietPlan = [
+          "Monday: Breakfast - Oatmeal with fruits, Lunch - Grilled chicken with vegetables, Dinner - Fish with quinoa",
+          "Tuesday: Breakfast - Greek yogurt with nuts, Lunch - Salad with tofu, Dinner - Beef stir-fry",
+          "Wednesday: Breakfast - Smoothie with spinach and berries, Lunch - Lentil soup, Dinner - Salmon with sweet potato",
+          "Thursday: Breakfast - Whole grain toast with avocado, Lunch - Quinoa salad, Dinner - Turkey breast with brown rice",
+          "Friday: Breakfast - Scrambled eggs with whole grain bread, Lunch - Chickpea curry, Dinner - Grilled shrimp with couscous",
+          "Saturday: Breakfast - Cottage cheese with berries, Lunch - Vegetable stir-fry, Dinner - Pork loin with baked potatoes",
+          "Sunday: Breakfast - Protein pancakes, Lunch - Lentil salad, Dinner - Grilled vegetables with tofu"
+        ];
+    
+        // Display diet plan
+        var dietPlanHtml = "<h2>Your Diet Plan for a Week (" + bmiCategory + ")</h2><ul>";
+        for (var i = 0; i < dietPlan.length; i++) {
+          dietPlanHtml += "<li>" + dietPlan[i] + "</li>";
+        }
+        dietPlanHtml += "</ul>";
+    
+        // Display the diet plan in an alert (for simplicity)
+        alert(dietPlanHtml);
+    
+        // Close the modal after submission
+        closeModal('dietPlanModal');
+      });
+    
+      // Function to handle calorie form submission
+      document.getElementById("calorieForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        // Retrieve push-ups and squats input values
+        var pushUps = parseInt(document.getElementById("pushUps").value);
+        var squats = parseInt(document.getElementById("squats").value);
+    
+        // Validate inputs
+        if (isNaN(pushUps) || isNaN(squats)) {
+          alert("Please enter valid numbers for push-ups and squats.");
+          return;
+        }
+    
+        // Calorie burn calculation (approximate values)
+        var caloriesPerPushUp = 0.29;
+        var caloriesPerSquat = 0.32;
+    
+        var totalCaloriesBurned = (pushUps * caloriesPerPushUp) + (squats * caloriesPerSquat);
+    
+        // Display the calories burned
+        alert("Calories burned: " + totalCaloriesBurned.toFixed(2) + " kcal");
+    
+        // Close the modal after submission
+        closeModal('calorieBurnModal');
+      });
+    </script>
